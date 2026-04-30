@@ -1,40 +1,44 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StudentSystem{
+public class StudentSystem {
 
-    public ArrayList list=new ArrayList();
+    private static final int EXCELLENT_SCORE = 100;
+    private static final int GOOD_SCORE = 90;
 
-    public void add(String n,int m){
-        String s=n+"-"+m;
-        list.add(s);
+    private final List<Student> students = new ArrayList<>();
+
+    public void addStudent(String name, int score) {
+        students.add(new Student(name, score));
     }
 
-    public void show(){
+    public void showStudents() {
 
-        for(int i=0;i<list.size();i++){
-
-            String q=list.get(i).toString();
-
-            if(q.contains("100")){
-                System.out.println("excellent "+q);
-            }
-            else{
-                if(q.contains("90")){
-                    System.out.println("good "+q);
-                }
-                else{
-                    System.out.println(q);
-                }
-            }
-
+        for (Student student : students) {
+            printStudentInfo(student);
         }
 
     }
 
-    public void x(){
-        System.out.println("students");
+    private void printStudentInfo(Student student) {
+
+        int score = student.getScore();
+
+        if (score == EXCELLENT_SCORE) {
+            System.out.println("excellent " + student);
+            return;
+        }
+
+        if (score >= GOOD_SCORE) {
+            System.out.println("good " + student);
+            return;
+        }
+
+        System.out.println(student);
+
     }
-    public void y(){
+
+    public void printHeader() {
         System.out.println("students");
     }
 
