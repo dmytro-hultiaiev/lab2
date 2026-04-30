@@ -1,24 +1,50 @@
 public class DroneControlSystem {
 
-    public int x=0,y=0,s=0,b=100;
+    private int positionX = 0;
+    private int positionY = 0;
+    private int speed = 0;
+    private int batteryLevel = 100;
 
-    public void go(int a,int bb){
+    private static final int MOVE_STEP = 10;
+    private static final int HIGH_SPEED_THRESHOLD = 80;
 
-        if(a==1){x=x+10;System.out.println("left");}
-        else if(a==2){x=x-10;System.out.println("right");}
-        else if(a==3){y=y+10;System.out.println("up");}
-        else if(a==4){y=y-10;System.out.println("down");}
+    public void move(int direction, int speedInput) {
+        handleMovement(direction);
+        handleSpeed(speedInput);
+        handleBattery();
 
-        if(bb>80){s=100;}
-        else{s=50;}
-
-        if(b<20){System.out.println("LOW");}
-
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(s);
+        printStatus();
     }
 
-    public void a1(){System.out.println("start");}
-    public void a2(){System.out.println("start");}
+    private void handleMovement(int direction) {
+        switch (direction) {
+            case 1 -> moveLeft();
+            case 2 -> moveRight();
+            case 3 -> moveUp();
+            case 4 -> moveDown();
+        }
+    }
+
+    private void moveLeft() { positionX -= MOVE_STEP; }
+    private void moveRight() { positionX += MOVE_STEP; }
+    private void moveUp() { positionY += MOVE_STEP; }
+    private void moveDown() { positionY -= MOVE_STEP; }
+
+    private void handleSpeed(int speedInput) {
+        speed = (speedInput > HIGH_SPEED_THRESHOLD) ? 100 : 50;
+    }
+
+    private void handleBattery() {
+        if (batteryLevel < 20) {
+            System.out.println("LOW BATTERY");
+        }
+        batteryLevel -= 5;
+    }
+
+    private void printStatus() {
+        System.out.println(positionX);
+        System.out.println(positionY);
+        System.out.println(speed);
+        System.out.println(batteryLevel);
+    }
 }
