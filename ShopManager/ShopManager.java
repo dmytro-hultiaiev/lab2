@@ -1,45 +1,64 @@
 public class ShopManager {
 
-    public int money=0;
-    public int items=0;
+    private static final int PRICE_LOW = 100;
+    private static final int PRICE_MEDIUM = 200;
+    private static final int PRICE_HIGH = 300;
 
-    public void doIt(int a){
+    private static final int MIN_ITEMS_THRESHOLD = 5;
 
-        if(a==1){
-            money=money+100;
-            items=items-1;
+    private int money = 0;
+    private int items = 0;
+
+    public void processAction(int actionType) {
+
+        updateState(actionType);
+        printReport();
+        checkStock();
+
+    }
+
+    private void updateState(int actionType) {
+
+        switch (actionType) {
+
+            case 1:
+                addTransaction(PRICE_LOW);
+                break;
+
+            case 2:
+                addTransaction(PRICE_MEDIUM);
+                break;
+
+            case 3:
+                addTransaction(PRICE_HIGH);
+                break;
+
+            default:
+                System.out.println("unknown action");
         }
 
-        if(a==2){
-            money=money+200;
-            items=items-1;
-        }
+    }
 
-        if(a==3){
-            money=money+300;
-            items=items-1;
-        }
+    private void addTransaction(int price) {
+        money += price;
+        items -= 1;
+    }
 
-        if(items<5){
+    private void checkStock() {
+
+        if (items < MIN_ITEMS_THRESHOLD) {
             System.out.println("buy more");
         }
 
+    }
+
+    private void printReport() {
         System.out.println(money);
         System.out.println(items);
-
     }
 
-    public void t1(){
+    public void printHeader() {
         System.out.println("report");
-    }
-
-    public void t2(){
-        System.out.println("report");
-    }
-
-    public void useless(){
-        int x=0;
-        x++;
     }
 
 }
